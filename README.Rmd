@@ -1,11 +1,15 @@
-Overview
---------
+---
+output: github_document
+---
 
-This code produces the regression analysis for Hodel,2024 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-Instructions for replication
-------------------
+## R Markdown
 
-Run `code/regression_analysis.R`. # Results files will be output to /results.
-Run `figures/coef_plot.R`. # Results files will be output to /figures
+This is an R Markdown document that generates a github readme.md file.
 
+```{r}
+summary(iris)
+```
