@@ -19,3 +19,4 @@ results/*.html
 results/*.pdf
 results/*RData
 figures/*.pdf
+data/*
