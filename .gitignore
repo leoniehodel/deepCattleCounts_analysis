@@ -1,0 +1,21 @@
+# Session Data files
+.RData
+.RDataTmp
+
+# History files
+.Rhistory
+.Rapp.history
+
+# RStudio files
+.Rproj.user/
+
+# DS Store files
+.DS_STORE
+data/.DS_STORE
+
+
+# outputs
+results/*.html
+results/*.pdf
+results/*RData
+figures/*.pdf
