@@ -1,10 +1,8 @@
-## Overview
-This code produces the regression analysis for Hodel,2024 
+## Summary:
+This repository contains code for conducting regression analysis as per Hodel et al. (2024).
 
-### Instructions for replication
+### Replication Instructions:
 
-Run code/regression_analysis.R. # Results files will be output to /results.
+Execute code/regression_analysis.R for regression analysis. Results will be generated in /results.
 
-Run figures/coef_plot.R. # Results files will be output to /figures
-
-
+Run figures/coef_plot.R for generating coefficient plots. Output files will be saved in /figures.
