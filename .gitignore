@@ -20,4 +20,5 @@ results/*.pdf
 results/*RData
 figures/*.pdf
 data/*
+unpublished_data/*
 working_ds/*
