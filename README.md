@@ -4,7 +4,7 @@ This repository contains code for conducting regression analysis as per Hodel et
 ### Replication Instructions:
 
 Execute 
-`code/regression_analysis.R`
+`code/03_reg_analysis.R`
 for regression analysis. Results will be generated in /results.
 
 
