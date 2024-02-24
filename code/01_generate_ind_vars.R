@@ -11,7 +11,7 @@ library(xlsx)
 #'## Read in SR data
 ################################
 # The data is filtered for the years 2018-2019 here 
-df <- st_read('analysis_2018-19/working_ds/car_withcattle1_adam_lr5_ens5.geojson') %>% 
+df <- st_read('data/car_withcattle1_adam_lr5_ens5.geojson') %>% 
   dplyr::select(COD_IMOVEL= cod_imovel, IBGE_CODE, SIGLA_UF, date, outline_id, n_cattle,n_cattle_sd ) %>% filter(date > '2018-01-01')
 df$area <- st_area(df) #%>% drop_units()%>%
 df <- df%>%mutate(area = round(area*0.0001,4))
@@ -297,7 +297,7 @@ all_car_ncattle_perc_tem$nearest_fedSh <- apply(dist,1,min)
 #dist <- st_distance(all_car_ncattle_perc_tem$centroids, all_sh)
 #all_car_ncattle_perc_tem$nearest_Sh <- apply(dist,1,min)
 
-st_write(all_car_ncattle_perc_tem,"analysis_2018-19/working_ds/regression_pars_final_v11.geojson")
+st_write(all_car_ncattle_perc_tem,"data/regression_pars_final_raw.geojson")
 
 
 

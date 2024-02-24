@@ -8,7 +8,7 @@ library(tidyverse)
 selected_car <- st_read('data/08_CAR-outlinesmerged/all_selected_car.geojson') %>%
   st_make_valid()
 selected_car$area <- st_area(selected_car)
-outlines <- st_read('data/02_satellite_images/all_outlines_sf_jan23.geojson')
+outlines <- st_read('data/all_outlines_sf_jan23.geojson')
 
 # Check unique cod_imovel
 length(selected_car$cod_imovel)
@@ -19,7 +19,7 @@ length(unique(selected_car$cod_imovel))
 ################################
 
 #list of all inferences 
-inf_dir <- 'data/03_inference/inference_adam_lr5_ens5/'
+inf_dir <- 'data/inference_adam_lr5_ens5/'
 name_output <- 'car_withcattle1_adam_lr5_ens5.geojson'
 
 inference_list <- list.files(inf_dir)
@@ -78,9 +78,6 @@ omitzeros<- all_car_with_cattle%>%filter(round(n_cattle)>=1)
 # find ground sampling distance
 st_distance(geopoints[1,], geopoints[2,])
 
-st_write(omitzeros,paste0('analysis_2018-19/working_ds/',name_output), append=FALSE)
+st_write(omitzeros,paste0('data/',name_output), append=FALSE)
 length(omitzeros$cod_imovel)
 length(unique(omitzeros$cod_imovel))
-
-
-

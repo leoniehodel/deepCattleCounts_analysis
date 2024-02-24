@@ -30,7 +30,7 @@ sr_max = 10
 output<- 'regression_pars.csv'
 
 #new regession pars added like population number
-ds_r<-st_read('analysis_2018-19/working_ds/regression_pars_final_v11.geojson')
+ds_r<-st_read('data/regression_pars_final_raw.geojson')
 ds_r$agricultural_credits<-ds_r$abc_inv_all_2013_2017.y/ds_r$credits_val_2013_2017.y
 ds_r_clean<- ds_r  %>% dplyr::select(SIGLA_UF,
                                      n_cattle,
