@@ -14,4 +14,4 @@ for generating coefficient plots. Output files will be saved in /figures.
 
 
 Check out the code for the deep learning part:
-[https://github.com/leoniehodel/deepCattleCount](https://github.com/leoniehodel/deepCattleCount)
+[leoniehodel/deepCattleCount](https://github.com/leoniehodel/deepCattleCount)
