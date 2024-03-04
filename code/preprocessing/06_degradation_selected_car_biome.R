@@ -14,13 +14,12 @@ if(packageVersion("exactextractr")<= "0.7.2") {
   devtools::install_github("isciences/exactextractr")
 }
 
-# ask for Matthieu Stigler for permission to get access to this code
-source("../ZDCinBrazil/Data/rcode_EPL_clean_data.R")
+source("code/src/rcode_EPL_clean_data.R")
 
-MPB_meta <-read_csv('data/06_spatial/05_mapbiomas_pasture_quality/amazon/mapbiomas-brazil-collection-70-pasture-quality-amazonia-area.csv')
-input_data <- st_read('analysis_2018-19/working_ds/car_withcattle1_adam_lr5_ens5.geojson')
-degradation_2019 <- terra::rast('data/06_spatial/05_mapbiomas_pasture_quality/amazon/mapbiomas-brazil-collection-70-pasture-quality-amazonia-2019.tif')
-degradation_2018 <- terra::rast('data/06_spatial/05_mapbiomas_pasture_quality/amazon/mapbiomas-brazil-collection-70-pasture-quality-amazonia-2018.tif')
+MPB_meta <-read_csv('data_raw_secundary/spatial//05_mapbiomas_coverage/amazon/mapbiomas-brazil-collection-70-pasture-quality-amazonia-area.csv')
+input_data <- st_read('data/car_withcattle1_adam_lr5_ens5.geojson')
+degradation_2019 <- terra::rast('data_raw_secundary/spatial/05_mapbiomas_pasture_quality/amazon/mapbiomas-brazil-collection-70-pasture-quality-amazonia-2019.tif')
+degradation_2018 <- terra::rast('data_raw_secundary/spatial/05_mapbiomas_pasture_quality/amazon/mapbiomas-brazil-collection-70-pasture-quality-amazonia-2018.tif')
 
 ################################
 #'## Clean meta
