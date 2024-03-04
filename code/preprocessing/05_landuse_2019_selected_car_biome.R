@@ -8,6 +8,14 @@ library(tidyverse)
 library(patchwork)
 
 
+#For Mapbiomas datasets use the Mapbiomas user toolkit
+#https://code.earthengine.google.com/?accept_repo=users/mapbiomas/user-toolkit
+#and download the following:
+# - mapbiomas brazil collection coverage (v7) for the states of Acre, Amazonas, Rondonia and Para for the years 2018 and 2019 and put into data_raw_secundary/spatial/01_coverage
+# - mapbiomas brazil collection transitions (v7) for the states of Acre, Amazonas, Rondonia and Para for the years 2013-2014 until 2018-2019 and put into data_raw_secundary/spatial/02_transitions
+# - mapbiomas brazil collection pasture quality (v6) for the states of Acre, Amazonas, Rondonia and Para for the years 2018 and 2019 and put into data_raw_secundary/spatial/03_pasture_quality
+
+
 ################################
 #'## Read data
 ################################
@@ -16,15 +24,15 @@ if(packageVersion("exactextractr")<= "0.7.2") {
   devtools::install_github("isciences/exactextractr")
 }
 
-# ask for Matthieu Stigler for permission to get access to this code
-source("../ZDCinBrazil/Data/rcode_EPL_clean_data.R")
+source("code/src/rcode_EPL_clean_data.R")
 
-# Read data files
+# Read cattle count files
+input_data <- st_read('data/car_withcattle1_adam_lr5_ens5.geojson')
 
-MPB_meta <-read_csv('data/06_spatial/01_mapbiomas_coverage/Amazon/mapbiomas-brazil-collection-70-amazonia-area.csv')
-input_data <- st_read('analysis_2018-19/working_ds/car_withcattle1_adam_lr5_ens5.geojson')
-lu_2019 <- terra::rast('data/06_spatial/01_mapbiomas_coverage/Amazon/mapbiomas-brazil-collection-70-amazonia-2019.tif')
-lu_2018 <- terra::rast('data/06_spatial/01_mapbiomas_coverage/Amazon/mapbiomas-brazil-collection-70-amazonia-2018.tif')
+# Read in raw secondary spatial maps
+lu_2019 <- terra::rast('data_raw_secundary/spatial//01_mapbiomas_coverage/Amazon/mapbiomas-brazil-collection-70-amazonia-2019.tif')
+lu_2018 <- terra::rast('data_raw_secundary/spatial/01_mapbiomas_coverage/Amazon/mapbiomas-brazil-collection-70-amazonia-2018.tif')
+MPB_meta <-read_csv('data_raw_secundary/spatial/01_mapbiomas_coverage/Amazon/mapbiomas-brazil-collection-70-amazonia-area.csv')
 
 ################################
 #'## Clean meta

@@ -1,9 +1,3 @@
-#' ---
-#' Title: "Regression analysis with stocking rate as regressand"
-#' Author: "Leonie"
-#' Date: 2023_02_24
-#' ---
-
 library(sf)
 library(tidyverse)
 library(arm)
@@ -11,6 +5,7 @@ library(units)
 library(estimatr)
 library(texreg)
 library(vtable)
+
 ################################
 #'## HYPERPARAMETERS
 ################################
@@ -27,7 +22,7 @@ sr_max = 10
 #'## Read in data
 ################################
 
-output<- 'regression_pars.csv'
+output<- 'regression_vars.csv'
 
 #new regession pars added like population number
 ds_r<-st_read('data/regression_pars_final_raw.geojson')

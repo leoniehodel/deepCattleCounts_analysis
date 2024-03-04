@@ -13,8 +13,7 @@ library(vtable)
 #'## Read in data
 ################################
 
-#curl_download(destfile='data/regression_pars.csv' ,url = "https://zenodo.org/records/10674947/files/lhodel_stocking_rates_regression_data.xlsx?download=1")
-dsdrop<- read.csv('data/regression_pars.csv')
+dsdrop<- read.csv('data/regression_vars.csv')
 dsdrop$SIGLA_UF <- factor(dsdrop$SIGLA_UF, levels = c("PA","RO", "AC" ,'AM'))
 
 ################################

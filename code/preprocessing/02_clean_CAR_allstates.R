@@ -3,87 +3,40 @@ library(tictoc)
 library(tidyverse)
 library(furrr)
 
-# unzip RO data
-all_car_mun_RO <- tibble(full_path = list.files("data/04_CAR/01_raw/RO_rawdownload/", full.names = TRUE, recursive = TRUE,pattern = "AREA_IMOVEL.zip$" )) %>% 
-  mutate( stringi = stringr::str_split(full_path,'/')) %>% mutate(name_out = map_chr(stringi, 6)) %>%
-  mutate(path_out = paste0("data/04_CAR/01_raw/RO/",name_out ,'/' ))%>% select(full_path,path_out)
-
-unzip(all_car_mun_RO$full_path[1], exdir=all_car_mun_RO$path_out[1]) 
-walk2(all_car_mun_RO$full_path, 
-      all_car_mun_RO$path_out,
-      ~unzip(.x, exdir=.y))
-
-# RO data aggregation
-
-CAR_all <- tibble(full_path = list.files("data/04_CAR/01_raw/RO/", full.names = TRUE,pattern = ".shp$", recursive = TRUE))
-shp_1 <- st_read(CAR_all$full_path[1])
-
-### Read ALL shp
-CAR_data <- CAR_all %>% 
-  mutate(data = future_map(full_path, st_read, quiet=TRUE, check_ring_dir = TRUE) ) %>% 
-  select(-full_path)
-
-df_sf = reduce(CAR_data, rbind)
-df = reduce(df_sf, rbind)
-
-df$IBGE_CODE <- substr(df$COD_IMOVEL,4,10)
-df$seq<- rep(seq_len(nrow(df)))
-
-st_write(df,'data/04_CAR/02_clean/RO_CAR.geojson')
-
-
-# PA data cleaning
-
-CAR_PA_data<- readRDS('data/04_CAR/01_raw/PA_/car_spatial.rds') %>% as.data.frame()
-CAR_PA <- st_read('data/04_CAR/01_raw/PA_/CAR_ungrouped.geojson')%>%
-  left_join(CAR_PA_data,by='COD_PROTOCOLO') %>% select(COD_IMOVEL,  NOM_COMPLETO_CADASTRANTE,
-                                                       IBGE_CODE = IDT_MUNICIPIO)
-CAR_PA$seq<- rep(seq_len(nrow(CAR_PA)))
-CAR_PA$NUM_AREA <- st_area(CAR_PA)
-st_write(CAR_PA,'data/04_CAR/02_clean/PA_CAR.geojson')
-
 ################################
-#'## AC --> already clean
+#'## download CAR into raw_data_secondary
 ################################
 
-CAR_AC_data<- st_read('data/04_CAR/02_clean/AC_CAR_cln.geojson')
-CAR_AC_data$seq<- rep(seq_len(nrow(CAR_AC_data)))
-CAR_AC_data <- CAR_AC_data %>% select(seq, cod_imovel, nom_imovel, nome_compl_cln, IBGE_CODE)
-st_write(CAR_AC_data,'data/04_CAR/02_clean/AC_CAR_cln_dec22.geojson')
+#data for RO from https://www.car.gov.br/publico/municipios/downloads?sigla=RO
+#data for AC from https://www.car.gov.br/publico/municipios/downloads?sigla=AC
+#data for PA from https://www.car.gov.br/publico/municipios/downloads?sigla=PA
+#data for AM from https://www.car.gov.br/publico/municipios/downloads?sigla=AM
+
+# --> put in data_raw_secondary/CAR/01_raw/
+
+# output files
+outputs<- 'data_raw_secondary/CAR/02_clean/'
 
 ################################
-#'## unzip AM data
+#'## clean data
 ################################
-all_car_mun_AM <- tibble(full_path = list.files("data/04_CAR/01_raw/AM_rawdownload/", full.names = TRUE, recursive = TRUE,pattern = "AREA_IMOVEL.zip$" )) %>% 
-  mutate( stringi = stringr::str_split(full_path,'/')) %>% mutate(name_out = map_chr(stringi, 6)) %>%
-  mutate(path_out = paste0("data/04_CAR/01_raw/AM/",name_out ,'/' ))%>% select(full_path,path_out)
+AC<- st_read('data_raw_secondary/CAR/01_raw/AC/AREA_IMOVEL_1.shp')
+AC$IBGE_CODE <- substr(AC$COD_IMOVEL,4,10)
+AC$seq<- rep(seq_len(nrow(AC)))
+st_write(AC,'data/04_CAR/02_clean/AC_CAR.geojson')
 
-#unzip(all_car_mun_AM$full_path[1], exdir=all_car_mun_AM$path_out[1]) 
-walk2(all_car_mun_AM$full_path, 
-      all_car_mun_AM$path_out,
-      ~unzip(.x, exdir=.y))
+PA<- st_read('data_raw_secondary/CAR/01_raw/PA/AREA_IMOVEL_1.shp')
+PA$IBGE_CODE <- substr(PA$COD_IMOVEL,4,10)
+PA$seq<- rep(seq_len(nrow(PA)))
+st_write(PA,'data/04_CAR/02_clean/PA_CAR.geojson')
 
-################################
-#'## AM data aggregation
-################################
+RO<- st_read('data_raw_secondary/CAR/01_raw/RO/AREA_IMOVEL_1.shp')
+RO$IBGE_CODE <- substr(RO$COD_IMOVEL,4,10)
+RO$seq<- rep(seq_len(nrow(RO)))
+st_write(RO,'data/04_CAR/02_clean/RO_CAR.geojson')
 
-CAR_all <- tibble(full_path = list.files("data/04_CAR/01_raw/AM/", full.names = TRUE,pattern = ".shp$", recursive = TRUE))
-shp_1 <- st_read(CAR_all$full_path[1])
-
-### Read ALL shp
-CAR_data <- CAR_all %>% 
-  mutate(data = future_map(full_path, st_read, quiet=TRUE, check_ring_dir = TRUE) ) %>% 
-  select(-full_path)
-
-df_sf = reduce(CAR_data, rbind)
-df = reduce(df_sf, rbind)
-
-df$IBGE_CODE <- substr(df$COD_IMOVEL,4,10)
-df$seq<- rep(seq_len(nrow(df)))
-
-#fix geometry & drop null geometries
-CAR_r <- df %>% st_make_valid()
-CAR_rr <- CAR_r[!st_is_empty(CAR_r),]
-
-st_write(df,'data/04_CAR/02_clean/AM_CAR.geojson')
+AM<- st_read('data_raw_secondary/CAR/01_raw/AM/AREA_IMOVEL_1.shp')
+AM$IBGE_CODE <- substr(AM$COD_IMOVEL,4,10)
+AM$seq<- rep(seq_len(nrow(AM)))
+st_write(AM,'data/04_CAR/02_clean/AM_CAR.geojson')
 

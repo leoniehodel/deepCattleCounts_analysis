@@ -5,10 +5,9 @@ library(tidyverse)
 #'## Read data
 ################################
 
-inf_dir <- 'data/03_inference/inference_adam_lr5_ens5/'
-inf_dir_clean <- 'data/03_inference/inference_adam_lr5_ens5_clean/'
-name_output <- 'data/03_inference/all_inference_adam_lr5_ens5.geojson'
-
+inf_dir <- 'data/inference_adam_lr5_ens5/'
+inf_dir_clean <- 'data/inference_adam_lr5_ens5_clean/'
+name_output <- 'data/all_inference_adam_lr5_ens5.geojson'
 
 
 # Create directory if it doesn't exist
@@ -17,7 +16,7 @@ if (!dir.exists(inf_dir_clean)) {
 }
 
 # Read outline data
-all_outlines <- st_read('data/02_satellite_images/all_outlines_sf_jan23.geojson') %>% 
+all_outlines <- st_read('data/02_satellite_images/image_outlines.geojson') %>% 
   as.data.frame()
 
 
@@ -53,6 +52,8 @@ all_inference$id_bbox <-as.factor(all_inference$id_bbox)
 length(levels(as.factor(all_inference$id_bbox)))
 
 # save a file with all inference data
+# projection is already in 4674 form deep learning output
+all_inference<- all_inference %>% st_set_crs(4674)
 st_write(all_inference,name_output)
 
 

@@ -4,8 +4,7 @@ library(tidyverse)
 ################################
 #'## Read data
 ################################
-name_output <- 'data/15_ABC/cust_all_allactividades_fno_2013_2017.csv'
-
+name_output <- 'data_raw_secundary/ABC/cust_all_allactividades_fno_2013_2017.csv'
 # from https://www.bcb.gov.br/estabilidadefinanceira/micrrural
 
 cust <- read_csv('data/15_ABC/01_raw_data/CusteioInvestimentoComercialIndustrialSemFiltros.csv',col_types = list(.default = col_character()))
