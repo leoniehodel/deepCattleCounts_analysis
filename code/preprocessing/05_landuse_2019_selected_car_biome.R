@@ -13,7 +13,6 @@ library(patchwork)
 #and download the following:
 # - mapbiomas brazil collection coverage (v7) for the states of Acre, Amazonas, Rondonia and Para for the years 2018 and 2019 and put into data_raw_secundary/spatial/01_coverage
 # - mapbiomas brazil collection transitions (v7) for the states of Acre, Amazonas, Rondonia and Para for the years 2013-2014 until 2018-2019 and put into data_raw_secundary/spatial/02_transitions
-# - mapbiomas brazil collection pasture quality (v6) for the states of Acre, Amazonas, Rondonia and Para for the years 2018 and 2019 and put into data_raw_secundary/spatial/03_pasture_quality
 
 
 ################################

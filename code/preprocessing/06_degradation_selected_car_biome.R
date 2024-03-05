@@ -9,6 +9,12 @@ library(patchwork)
 ################################
 #'## Read data
 ################################
+
+#For Mapbiomas datasets use the Mapbiomas user toolkit
+#https://code.earthengine.google.com/?accept_repo=users/mapbiomas/user-toolkit
+#and download the following:
+# - mapbiomas brazil collection pasture quality (v7) for the Amazon biome for the years 2018 and 2019 and put into data_raw_secundary/spatial/03_pasture_quality
+
 if(packageVersion("exactextractr")<= "0.7.2") {
   warning("Needs higher/dev version due to bug https://github.com/isciences/exactextractr/issues/68")
   devtools::install_github("isciences/exactextractr")
