@@ -1,4 +1,3 @@
-## Summary:
 This repository contains code for conducting regression analysis as per Hodel et al. (in review).
 
 
